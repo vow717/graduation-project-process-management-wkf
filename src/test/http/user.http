@@ -1,0 +1,23 @@
+### 用户修改密码
+### token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiOVVHVCIsInVpZCI6IjEzMTA5MzU4OTQyNjc5Nzc3MjgiLCJpYXQiOjE3MzI2MjM1MTcsImV4cCI6MTczMjcwOTkxN30.4bn-w1tQ-w3c934Qg7P6RJAHmKqnwYWnIJ-HhSoFLks
+
+POST localhost:8080/api/password
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiOVVHVCIsImRlcGFydG1lbnRJZCI6IjEzMTA5MDY4NzU4NzUwOTA0MzIiLCJ1aWQiOiIxMzExMzA4NDgyMDQ3NTY1ODI0IiwiaWF0IjoxNzMyNzEyMzQ1LCJleHAiOjE3MzI3OTg3NDV9.-RFzpW2umGd2Vkw_u9ccr2b6LsO5fijsn0SEnkAMMAY
+Content-Type: application/json
+
+{
+    "password":"111111"
+}
+
+### 改回来
+POST localhost:8080/api/password
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiOVVHVCIsImRlcGFydG1lbnRJZCI6IjEzMTA5MDY4NzU4NzUwOTA0MzIiLCJ1aWQiOiIxMzExMzA4NDgyMDQ3NTY1ODI0IiwiaWF0IjoxNzMyNzEyMzQ1LCJleHAiOjE3MzI3OTg3NDV9.-RFzpW2umGd2Vkw_u9ccr2b6LsO5fijsn0SEnkAMMAY
+Content-Type: application/json
+
+{
+  "password":"2022001"
+}
+
+### 查看本部门(老师)的processes
+GET localhost:8080/api/processes
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8

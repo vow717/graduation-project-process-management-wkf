@@ -1,0 +1,26 @@
+### 管理员登陆
+POST localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "number": "admin",
+  "password": "admin"
+}
+
+### 测试教师1用户登入
+POST localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "number": "2022001",
+    "password": "2022001"
+}
+
+### 测试教师2用户登入
+POST localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "number": "2022002",
+  "password": "2022002"
+}

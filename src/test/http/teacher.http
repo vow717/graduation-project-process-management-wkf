@@ -1,0 +1,133 @@
+### 测试教师
+### token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+### 部门id："1310906875875090432"
+
+### 修改一群学生
+PATCH localhost:8080/api/teacher/students
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+[{
+"name": "测试学生1",
+"number": "20220001",
+  "groupNumber": 1
+},
+  {
+    "name": "测试学生2",
+    "number": "20220002",
+    "groupNumber": 2
+  }
+]
+
+### 添加一群学生
+POST localhost:8080/api/teacher/students
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+[
+  {
+    "name": "测试学生1",
+    "number": "20220001",
+    "student": "{\"teacherId\": \"1312662119751540736\", \"queueNumber\": 2, \"teacherName\": \"测试教师\", \"projectTitle\": \"测试项目标题\"}"
+  }
+  ,
+  {
+    "name": "测试学生2",
+    "number": "20220002",
+    "student": "{\"teacherId\": \"1311564620051701760\", \"queueNumber\": 1, \"teacherName\": \"测试教师\", \"projectTitle\": \"测试项目标题\"}"
+  }
+]
+
+
+### 删除一个学生
+DELETE localhost:8080/api/teacher/deleteStudent/20220001
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+
+### 获取同组的学生
+GET localhost:8080/api/teacher/students/group
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+
+### 获取指导的学生
+GET localhost:8080/api/teacher/students/tutor
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+
+
+### ------------------------------------------------------------------------
+
+### 添加一个审阅的process
+POST localhost:8080/api/teacher/processes
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+{
+  "name": "开题答辩",
+  "auth": "zg0NS",
+  "point": 20,
+  "items": "[{\"number\": 0, \"name\": \"选题依据\", \"point\": 50}, {\"number\": 1, \"name\": \"设计方案\", \"point\": 25}, {\"number\": 2, \"name\": \"答辩过程\", \"point\": 25}]"
+}
+### 添加一个指导的process
+POST localhost:8080/api/teacher/processes
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+{
+  "name": "开题答辩",
+  "auth": "AsImV",
+  "point": 10,
+  "items": "[{\"number\": 0, \"point\": 50, \"name\": \"软件工程\"},{\"number\": 1, \"point\": 50, \"name\": \"工程管理\"}]"
+}
+
+### 修改一个process
+PATCH localhost:8080/api/teacher/processes
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+{
+  "id": "1311616601394962432",
+  "name": "开题答辩",
+  "auth": "zg0NS",
+  "point": 30,
+  "items": "[{\"number\": 0, \"name\": \"选题依据\", \"point\": 50}, {\"number\": 1, \"name\": \"设计方案\", \"point\": 25}, {\"number\": 2, \"name\": \"答辩过程\", \"point\": 25}]"
+
+}
+
+### 删除一个process(通过Id)
+DELETE localhost:8080/api/teacher/processes/1311616601394962432
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+
+
+
+### -------------------------------------------------------
+###添加一个processscore
+POST localhost:8080/api/teacher/processscores/types/zg0NS
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+{
+  "studentId": "1312665981526925312",
+  "teacherId": "1311564620051701760",
+  "processId": "1311616601394962432",
+  "detail": "{\"teacherName\": \"测试教师\", \"score\": 100, \"detail\": [{\"number\": 0, \"score\": 50}, {\"number\": 1, \"score\": 25}, {\"number\": 2, \"score\": 25}]}"
+}
+
+###添加一个processscore
+POST localhost:8080/api/teacher/processscores/types/AsImV
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMjc3MTc5OSwiZXhwIjoxNzMzNjM1Nzk5fQ.0FGy9ocV7UH9QDFIgcl4rOPt8czZFukOxPQplZLeVc8
+Content-Type: application/json
+
+{
+  "studentId": "1312665981543702528",
+  "teacherId": "1311564620051701760",
+  "processId": "1312646810806181888",
+  "detail": "{\"teacherName\": \"测试教师\", \"score\": 100, \"detail\": [{\"number\": 0, \"score\": 50}, {\"number\": 1, \"score\": 50}}]"
+}
+
+
+
+### 查找老师的process过程的types=zg0NS（审查）下的processScores
+GET localhost:8080/api/teacher/processes/1311616601394962432/types/zg0NS
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMzAzNTM4OSwiZXhwIjoxNzMzODk5Mzg5fQ.xlQ8Abqv07iv7itXBlsWQvC8C3llRvmATuijg5kUcKU
+
+### 查找老师的process过程的types=AsImV（指导）下的processScores
+GET localhost:8080/api/teacher/processes/1312646810806181888/types/AsImV
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzExNTY0NjIwMDUxNzAxNzYwIiwicm9sZSI6IjlVR1QiLCJkZXBhcnRtZW50SWQiOiIxMzEwOTA2ODc1ODc1MDkwNDMyIiwiZ3JvdXBOdW1iZXIiOjEsImlhdCI6MTczMzAzNTM4OSwiZXhwIjoxNzMzODk5Mzg5fQ.xlQ8Abqv07iv7itXBlsWQvC8C3llRvmATuijg5kUcKU

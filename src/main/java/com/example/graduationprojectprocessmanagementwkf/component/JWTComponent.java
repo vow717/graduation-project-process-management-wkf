@@ -1,4 +1,4 @@
-package com.example.graduationprojectprocessmanagementwkf.exception.component;
+package com.example.graduationprojectprocessmanagementwkf.component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -34,8 +34,8 @@ public class JWTComponent {
 
     //这个方法是用来生成JWT的，传入一个map，这个map是JWT的payload部分
     public String encode(Map<String,Object> map){
-        //1ds过期
-        LocalDateTime time = LocalDateTime.now().plusDays(1);
+        //10ds过期
+        LocalDateTime time = LocalDateTime.now().plusDays(10);
         return JWT.create()
                 .withPayload(map)
                 .withIssuedAt(new Date())

@@ -1,1 +1,34 @@
-spring.application.name=graduation-project-process-management-wkf
+spring:
+  r2dbc:
+    url: r2dbcs:mysql://127.0.0.1:13310/my_database
+    username: root
+    password: Wkfroot
+    pool:
+      enabled: true
+      initial-size: 10
+  sql:
+    init:
+      mode: always
+
+  jackson:
+    default-property-inclusion: non_null
+
+logging:
+  level:
+    root: warn
+    com:
+      example: debug
+  pattern:
+    console: '%-5level %C.%M[%line] - %msg%n'
+
+my:
+  secretkey: 'a2jCaIA2xaj29AfFAx'
+  upload: 'D:/毕设上传数据/'
+
+
+# http://localhost:8080/webjars/swagger-ui/index.html
+# 否则webflux有前缀
+# 拦截器需过滤：/v3/api-docs/**; /swagger-ui/**
+springdoc:
+  webjars:
+    prefix: ''

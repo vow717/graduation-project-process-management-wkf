@@ -1,7 +1,7 @@
-package com.example.graduationprojectprocessmanagementwkf.exception.service;
+package com.example.graduationprojectprocessmanagementwkf.service;
 
-import com.example.graduationprojectprocessmanagementwkf.exception.dox.User;
-import com.example.graduationprojectprocessmanagementwkf.exception.repository.UserRepository;
+import com.example.graduationprojectprocessmanagementwkf.dox.User;
+import com.example.graduationprojectprocessmanagementwkf.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

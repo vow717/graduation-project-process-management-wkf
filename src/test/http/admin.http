@@ -1,0 +1,39 @@
+### 管理员token:
+### token: token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQUNPZCIsImRlcGFydG1lbnRJZCI6IjAiLCJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2IiwiaWF0IjoxNzMyNzEyMzEwLCJleHAiOjE3MzI3OTg3MTB9.aGEaVw09kEpnlQK95KZzMZ2JumtzYnQEjrF1PPQu7Sw
+### 添加department
+POST localhost:8080/api/admin/addDepartment
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2Iiwicm9sZSI6IkFDT2QiLCJkZXBhcnRtZW50SWQiOiIwIiwiaWF0IjoxNzMzMDMzNDI1LCJleHAiOjE3MzM4OTc0MjV9.1XBpBTJYHxBH7Mkal3Pj7l8oLqhHponl_9f6u1KHb7A
+Content-Type: application/json
+
+{
+    "name": "测试部门"
+}
+
+### 删除department
+DELETE localhost:8080/api/admin/deleteDepartment/1310906875875090432
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2Iiwicm9sZSI6IkFDT2QiLCJkZXBhcnRtZW50SWQiOiIwIiwiaWF0IjoxNzMzMDMzNDI1LCJleHAiOjE3MzM4OTc0MjV9.1XBpBTJYHxBH7Mkal3Pj7l8oLqhHponl_9f6u1KHb7A
+
+### 列出所有department
+GET localhost:8080/api/admin/getDepartments
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2Iiwicm9sZSI6IkFDT2QiLCJkZXBhcnRtZW50SWQiOiIwIiwiaWF0IjoxNzMzMDMzNDI1LCJleHAiOjE3MzM4OTc0MjV9.1XBpBTJYHxBH7Mkal3Pj7l8oLqhHponl_9f6u1KHb7A
+
+
+### 添加teacher
+POST localhost:8080/api/admin/addTeacher
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2Iiwicm9sZSI6IkFDT2QiLCJkZXBhcnRtZW50SWQiOiIwIiwiaWF0IjoxNzMzMDMzNDI1LCJleHAiOjE3MzM4OTc0MjV9.1XBpBTJYHxBH7Mkal3Pj7l8oLqhHponl_9f6u1KHb7A
+Content-Type: application/json
+
+{
+  "number": "2022002",
+    "name": "测试教师2",
+    "departmentId": "1310906875875090432",
+  "groupNumber": 2
+}
+### 查看某个department的所有teacher
+GET localhost:8080/api/admin/getTeachers/1310906875875090432
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQUNPZCIsImRlcGFydG1lbnRJZCI6IjAiLCJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2IiwiaWF0IjoxNzMyNzEyMzEwLCJleHAiOjE3MzI3OTg3MTB9.aGEaVw09kEpnlQK95KZzMZ2JumtzYnQEjrF1PPQu7Sw
+
+
+### 删除teacher
+DELETE localhost:8080/api/admin/deleteTeacher/1311564620051701760
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQUNPZCIsImRlcGFydG1lbnRJZCI6IjAiLCJ1aWQiOiIxMzEwODg4OTQxNDMzODM5NjE2IiwiaWF0IjoxNzMyNzEyMzEwLCJleHAiOjE3MzI3OTg3MTB9.aGEaVw09kEpnlQK95KZzMZ2JumtzYnQEjrF1PPQu7Sw

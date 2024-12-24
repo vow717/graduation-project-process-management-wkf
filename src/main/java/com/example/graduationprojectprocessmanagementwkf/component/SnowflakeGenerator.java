@@ -1,4 +1,4 @@
-package com.example.graduationprojectprocessmanagementwkf.exception.component;
+package com.example.graduationprojectprocessmanagementwkf.component;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

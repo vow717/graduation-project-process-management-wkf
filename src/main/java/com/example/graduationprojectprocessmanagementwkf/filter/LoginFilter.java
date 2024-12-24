@@ -1,7 +1,8 @@
-package com.example.graduationprojectprocessmanagementwkf.exception.filter;
+package com.example.graduationprojectprocessmanagementwkf.filter;
 
+import com.example.graduationprojectprocessmanagementwkf.component.JWTComponent;
 import com.example.graduationprojectprocessmanagementwkf.exception.Code;
-import com.example.graduationprojectprocessmanagementwkf.exception.component.JWTComponent;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -24,8 +25,10 @@ public class LoginFilter implements WebFilter {
     private final List<PathPattern> excludes=List.of(new PathPatternParser().parse("/api/login"));
     private final JWTComponent jwtComponent;
     private final ResponseHelper responseHelper;
+
+    @NonNull //这个注解用于标记非空的参数，如果传入的参数为空，则会抛出异常。
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain){
+    public Mono<Void> filter(ServerWebExchange exchange,@NonNull WebFilterChain chain){
         for(PathPattern p:excludes){
             if(p.matches(exchange.getRequest().getPath().pathWithinApplication())){
                 return chain.filter(exchange);
@@ -39,6 +42,10 @@ public class LoginFilter implements WebFilter {
                 .flatMap(d->{
                     exchange.getAttributes().put("uid",d.getClaim("uid").asString());
                     exchange.getAttributes().put("role",d.getClaim("role").asString());
+                    exchange.getAttributes().put("departmentId",d.getClaim("departmentId").asString());
+                    if (!d.getClaim("groupNumber").isMissing()) {
+                        exchange.getAttributes().put("groupNumber", d.getClaim("groupNumber").asInt());
+                    }
                     return chain.filter(exchange);
                 });
     }

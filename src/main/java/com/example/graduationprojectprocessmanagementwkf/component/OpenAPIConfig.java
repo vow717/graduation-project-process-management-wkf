@@ -22,5 +22,6 @@ public class OpenAPIConfig {
                 .schemaRequirement(HttpHeaders.AUTHORIZATION, token)
                 // 在全局请求添加header信息
                 .addSecurityItem(securityRequirement);
+
     }
 }

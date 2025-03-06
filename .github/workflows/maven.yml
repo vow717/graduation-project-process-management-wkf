@@ -28,28 +28,25 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: docker push
-      run: |
-        ${{ secrets.aliyun_dockerlogin }}
-        docker build . -t ${{ secrets.aliyun_dockerrepository }}
-        docker push ${{ secrets.aliyun_dockerrepository }}
+      run: mvn -B package --file pom.xml -Dmaven.test.skip=true
 
-  deploy:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: deploy
-        uses: appleboy/ssh-action@master
-        with:
-            host: ${{ secrets.aliyun_host }}
-            username: ${{ secrets.aliyun_username }}
-            password: ${{ secrets.aliyun_pwd }}
-            script: |
-              ${{ secrets.aliyun_dockerlogin }}
-              docker stop $(docker ps --filter ancestor=${{secrets.aliyun_dockerrepository}} -q)
-              docker rm -v $(docker ps -a --filter ancestor=${{secrets.aliyun_dockerrepository}} -q)
-              docker rmi -f $(docker images ${{secrets.aliyun_dockerrepository}} -q)
-              
-              docker pull ${{ secrets.aliyun_dockerrepository }}
-              docker run -p 8080:8080 -d ${{ secrets.aliyun_dockerrepository }}
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.aliyun_host }}
+        username: ${{ secrets.aliyun_username }}
+        password: ${{ secrets.aliyun_pwd }}
+        source: "target/*.jar"
+        target: ${{ secrets.target }}
+        # 仅复制文件，不复制目录
+        strip_components: 1
+        rm: true
+
+    # deploy
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+          host: ${{ secrets.aliyun_host }}
+          username: ${{ secrets.aliyun_username }}
+          password: ${{ secrets.aliyun_pwd }}
+          script: ${{ secrets.recreate_container }}

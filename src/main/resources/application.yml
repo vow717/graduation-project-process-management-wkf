@@ -1,11 +1,14 @@
 spring:
   r2dbc:
-    url: r2dbcs:mysql://127.0.0.1:13310/my_database
-    username: root
-    password: Wkfroot
+#    url: r2dbcs:mysql://127.0.0.1:13310/my_database
+#    username: root
+#    password: Wkfroot
 #    url: r2dbcs:mysql://mysql:3306/my_database
 #    username: root
 #    password: Wkfroot
+    url: r2dbcs:mysql://127.0.0.1:3306/gpgm
+    username: wkf
+    password: Wkfroot
     pool:
       enabled: true
       initial-size: 10
@@ -27,7 +30,7 @@ logging:
 my:
   secretkey: 'a2jCaIA2xaj29AfFAx'
 #  upload: 'D:/毕设上传数据/'
-  upload: '/graduationsystem/upload/'
+  upload: './upload/'
 
 
 # http://localhost:8080/webjars/swagger-ui/index.html

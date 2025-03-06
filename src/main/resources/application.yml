@@ -30,7 +30,7 @@ logging:
 my:
   secretkey: 'a2jCaIA2xaj29AfFAx'
 #  upload: 'D:/毕设上传数据/'
-  upload: './upload/'
+  upload: '/gpgm/upload/'
 
 
 # http://localhost:8080/webjars/swagger-ui/index.html

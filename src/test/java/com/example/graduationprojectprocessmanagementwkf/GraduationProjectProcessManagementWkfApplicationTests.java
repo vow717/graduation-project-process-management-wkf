@@ -3,11 +3,11 @@ package com.example.graduationprojectprocessmanagementwkf;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.sql.init.mode=never")
 class GraduationProjectProcessManagementWkfApplicationTests {
-//
-//    @Test
-//    void contextLoads() {
-//    }
+
+    @Test
+    void contextLoads() {
+    }
 
 }

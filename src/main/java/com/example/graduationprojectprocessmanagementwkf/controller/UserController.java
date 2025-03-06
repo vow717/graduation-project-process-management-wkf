@@ -36,6 +36,10 @@ public class UserController {
     @Value("${my.upload}")
     private String uploadDir; // 注入上传路径
 
+    @GetMapping("test")
+    public Mono<ResultVO> test(){
+        return Mono.just(ResultVO.success("test"));
+    }
 
     @PostMapping("password")
     public Mono<ResultVO> changePassword(@RequestAttribute String uid,@RequestBody User user){

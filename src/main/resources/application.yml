@@ -3,12 +3,9 @@ spring:
 #    url: r2dbcs:mysql://127.0.0.1:13310/my_database
 #    username: root
 #    password: Wkfroot
-    url: r2dbc:mysql://mysql:3306/my_database
+    url: r2dbcs:mysql://mysql:3306/my_database
     username: root
     password: Wkfroot
-#    url: r2dbcs:mysql://127.0.0.1:3306/gpgm
-#    username: wkf
-#    password: Wkfroot
     pool:
       enabled: true
       initial-size: 10

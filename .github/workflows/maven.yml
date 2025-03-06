@@ -34,3 +34,22 @@ jobs:
         ${{ secrets.aliyun_dockerlogin }}
         docker build . -t ${{ secrets.aliyun_dockerrepository }}
         docker push ${{ secrets.aliyun_dockerrepository }}
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+            host: ${{ secrets.aliyun_host }}
+            username: ${{ secrets.aliyun_username }}
+            password: ${{ secrets.aliyun_pwd }}
+            script: |
+              ${{ secrets.aliyun_dockerlogin }}
+              docker stop $(docker ps --filter ancestor=${{secrets.aliyun_dockerrepository}} -q)
+              docker rm -v $(docker ps -a --filter ancestor=${{secrets.aliyun_dockerrepository}} -q)
+              docker rmi -f $(docker images ${{secrets.aliyun_dockerrepository}} -q)
+              
+              docker pull ${{ secrets.aliyun_dockerrepository }}
+              docker run -p 8080:8080 -d ${{ secrets.aliyun_dockerrepository }}

@@ -173,6 +173,7 @@ public class TeacherController {
         headers.setContentDisposition(ContentDisposition.attachment().build());
         //将 HTTP 响应头的Content-Type字段设置为MediaType.APPLICATION_OCTET_STREAM。APPLICATION_OCTET_STREAM是一种通用的二进制流类型，表示响应的内容是原始的二进制数据
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        //DataBufferUtils.read()方法是用来读取文件内容并返回一个Flux<DataBuffer>对象的方法。这个方法会将文件内容读取到DataBuffer对象中，并将DataBuffer对象放入Flux流中
         return DataBufferUtils.read(path, factory, 1024 * 8);
     }
 

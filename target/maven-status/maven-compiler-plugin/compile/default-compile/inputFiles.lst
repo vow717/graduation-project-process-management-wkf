@@ -13,6 +13,7 @@ D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\dox\ProcessFile.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\dox\ProcessScore.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\dox\User.java
+D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\dox\UserAvatar.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\exception\Code.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\exception\XException.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\filter\AdminFilter.java
@@ -24,6 +25,7 @@ D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\repository\ProcessFileRepository.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\repository\ProcessRepository.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\repository\ProcessScoreRepository.java
+D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\repository\UserAvatarRepository.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\repository\UserRepository.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\service\AdminService.java
 D:\workspace-spring\graduation-project-process-management-wkf\src\main\java\com\example\graduationprojectprocessmanagementwkf\service\InitService.java

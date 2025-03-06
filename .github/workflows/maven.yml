@@ -30,6 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml -Dmaven.test.skip=true
 
+    # copy
     - name: copy file via ssh password
       uses: appleboy/scp-action@v0.1.7
       with:

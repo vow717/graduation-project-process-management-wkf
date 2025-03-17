@@ -50,4 +50,5 @@ jobs:
           host: ${{ secrets.aliyun_host }}
           username: ${{ secrets.aliyun_username }}
           password: ${{ secrets.aliyun_pwd }}
+          # cd /www/wwwroot/项目名字
           script: ${{ secrets.recreate_container }}

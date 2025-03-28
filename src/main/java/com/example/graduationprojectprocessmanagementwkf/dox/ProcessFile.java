@@ -22,7 +22,8 @@ public class ProcessFile {
     private String detail;
     private String studentId;
     private String processId;
-    private Integer number;
+    private Integer number; //文件序号, 用于区分同一个学生上传的多个文件,一个processId老师可能要求学生上传多个文件
+    private String fileHash;//md5文件hash,用于判断文件是否重复上传来实现秒传功能
     @ReadOnlyProperty
     @JsonIgnore
     private LocalDateTime insertTime;

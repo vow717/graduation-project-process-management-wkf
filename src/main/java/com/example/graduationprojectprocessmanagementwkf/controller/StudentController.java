@@ -5,19 +5,29 @@ import com.example.graduationprojectprocessmanagementwkf.exception.Code;
 import com.example.graduationprojectprocessmanagementwkf.exception.XException;
 import com.example.graduationprojectprocessmanagementwkf.service.StudentService;
 import com.example.graduationprojectprocessmanagementwkf.vo.ResultVO;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -34,6 +44,7 @@ public class StudentController {
                 .map(ResultVO::success);
     }
 
+    //单文件+签名x-token上传接口
     @PostMapping("upload/{pid}/numbers/{number}")
     public Mono<ResultVO> upload(@PathVariable String pid,
                                  @PathVariable int number,
@@ -80,4 +91,112 @@ public class StudentController {
                 .onErrorResume(ex -> Mono.just(ResultVO.error(Code.ERROR, "文件上传错误！" + ex.getMessage())));
 
     }
+
+    // 切片上传接口+hash验证
+    @PostMapping("uploadByChunks")
+    public Mono<ResultVO> uploadChunk(
+            @RequestPart("chunk") FilePart chunk,
+            @RequestPart("fileHash") String fileHash,
+            @RequestPart("pname") String pname,
+            @RequestPart("chunkIndex") String chunkIndex //这个chunkIndex是fileHash-index这种形式
+            ) {
+        log.debug("目前上传：chunkIndex: {}", chunkIndex);
+        // 构建切片存储路径
+        Path chunkDir = Paths.get(uploadDirectory, pname, fileHash);
+        // 构建切片文件路径
+        Path chunkPath = chunkDir.resolve(String.valueOf(chunkIndex));
+
+        return Mono.fromRunnable(() -> {
+                    try {
+                        Files.createDirectories(chunkDir);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .thenMany(chunk.content())
+                .flatMap(dataBuffer -> saveChunk(dataBuffer, chunkPath))
+                .then(Mono.just(ResultVO.success("切片上传成功")));
+    }
+
+    // 合并切片并保存文件
+    private Mono<Void> saveChunk(DataBuffer dataBuffer, Path chunkPath) {
+        return Mono.fromRunnable(() -> {
+            try (var outputStream = Files.newOutputStream(chunkPath)) {
+                byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                dataBuffer.read(bytes);
+                outputStream.write(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException("切片保存失败", e);
+            } finally {
+                DataBufferUtils.release(dataBuffer);
+            }
+        });
+    }
+
+    // 完成上传接口（由前端在所有切片上传后调用）
+    @PostMapping("complete/{pid}/numbers/{number}")
+    public Mono<ResultVO> completeUpload(
+            @PathVariable String pid,
+            @PathVariable int number,
+            @RequestPart("fileHash") String fileHash,
+            @RequestPart("pname") String pname,
+            @RequestPart("filename") String filename,
+            @RequestAttribute("uid") String sid) {
+        log.debug("completeUpload");
+        // 构建临时切片目录和最终文件路径
+        Path tempDir = Paths.get(uploadDirectory, pname, fileHash);
+        Path finalPath = Paths.get(uploadDirectory, pname, filename);
+
+        return Mono.just(tempDir)
+                .filter(Files::exists)
+                .switchIfEmpty(Mono.error(() -> XException.builder().codeNum(Code.ERROR).message("切片不完全").build()))
+                .flatMap(dir -> Mono.fromRunnable(() -> {
+                    try {
+                        mergeChunks(dir, finalPath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .then(Mono.fromRunnable(() -> {
+                    try {
+                        Files.walk(tempDir)
+                                .sorted(Comparator.reverseOrder())
+                                .map(Path::toFile)
+                                .forEach(java.io.File::delete);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }))
+                .then(Mono.defer(() -> {
+                    ProcessFile pf = ProcessFile.builder()
+                            .studentId(sid)
+                            .processId(pid)
+                            .number(number)
+                            .detail(Paths.get(pname, filename).toString())
+                            .build();
+                    return studentService.addProcessFile(pf);
+                }))
+                .thenReturn(ResultVO.success("文件上传完成"));
+    }
+
+    // 切片合并方法
+    private void mergeChunks(Path tempDir, Path finalPath) throws IOException {
+        Files.createDirectories(finalPath.getParent());
+        try (var outputStream = Files.newOutputStream(finalPath)) {
+            Files.list(tempDir)
+                    .sorted(Comparator.comparingInt(path -> Integer.parseInt(path.getFileName().toString().split("-")[1])))
+                    .forEach(chunkPath -> {
+                        try (var inputStream = Files.newInputStream(chunkPath)) {
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, bytesRead);
+                            }
+                        } catch (IOException e) {
+                            throw XException.builder().codeNum(Code.ERROR).message("切片合并失败").build();
+                        }
+                    });
+        }
+    }
+
 }

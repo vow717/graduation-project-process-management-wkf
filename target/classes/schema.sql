@@ -60,10 +60,12 @@ create table if not exists `process_file`
     student_id  char(19)         not null,
     process_id  char(19)         not null,
     number      tinyint unsigned not null,
+    file_hash   char(32)         not null,
     insert_time datetime         not null default current_timestamp,
     update_time datetime         not null default current_timestamp on update current_timestamp,
 
-    unique (process_id, student_id, number)
+    unique (process_id, student_id, number),
+    index (file_hash)
 );
 
 create table if not exists `user_avatar`

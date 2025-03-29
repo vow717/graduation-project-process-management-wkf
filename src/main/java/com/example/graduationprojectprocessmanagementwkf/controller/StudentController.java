@@ -23,10 +23,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -92,6 +90,30 @@ public class StudentController {
 
     }
 
+    //检查文件是否存在以选择是否秒传
+    @PostMapping("checkFile")
+    public Mono<ResultVO> checkFileExists(@RequestBody String hash) {
+        return studentService.findProcessFileByHash(hash)
+                .map(pf->{log.debug("pf:{}",pf);return pf;})
+                //Collects.singleOrEmpty()方法是Reactor提供的一种用于将Flux流中的元素收集到一个Mono流中的方法，如果Flux流中有多个元素，或者没有元素，都会抛出异常。
+                //那么此时ResultVO.success(Collections.singletonMap("exists", true))就会被执行，返回一个包含exists字段值为true的ResultVO对象。
+                .map(pf -> ResultVO.success(Collections.singletonMap("exists", true)))
+                .defaultIfEmpty(ResultVO.success(Collections.singletonMap("exists", false)));
+    }
+    //检查切片是否存在，已选择断点续传
+    @PostMapping("checkChunks/{pname}")
+    public Mono<ResultVO> checkChunks(@PathVariable String pname,
+                                      @RequestBody String hash) {
+        Path chunkDir = Paths.get(uploadDirectory, pname, hash);
+        return Mono.fromCallable(() -> {
+            if (!Files.exists(chunkDir)) return new ArrayList<>();
+
+            return Files.list(chunkDir)
+                    .map(p -> p.getFileName().toString().split("-")[1])
+                    .collect(Collectors.toList());
+        }).map(ResultVO::success);
+    }
+
     // 切片上传接口+hash验证
     @PostMapping("uploadByChunks")
     public Mono<ResultVO> uploadChunk(
@@ -121,7 +143,15 @@ public class StudentController {
     // 合并切片并保存文件
     private Mono<Void> saveChunk(DataBuffer dataBuffer, Path chunkPath) {
         return Mono.fromRunnable(() -> {
-            try (var outputStream = Files.newOutputStream(chunkPath)) {
+            try (var outputStream = Files.newOutputStream(
+                    chunkPath,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+                    //追加写入,如果文件存在则追加写入，不存在则创建
+                    //这么做的原因是：通常后端的一个dataBuffer对象中包含的数据量是有限的，可能不足以完整保存一个切片的数据，所以需要将多个dataBuffer对象中的数据合并到一个文件中。
+                    //比如，Spring WebFlux底层使用 Netty 处理请求，默认的DataBuffer大小为 256KB，如果上传的文件大于 256KB，那么就会分多个 DataBuffer 对象来保存文件数据。
+                    //而如果不使用APPEND（追加写入）选项，那么在分片大小超过256KB的情况下，后续的分片会覆盖前面的分片，导致文件数据不完整。
+            )) {
                 byte[] bytes = new byte[dataBuffer.readableByteCount()];
                 dataBuffer.read(bytes);
                 outputStream.write(bytes);
@@ -172,6 +202,7 @@ public class StudentController {
                             .studentId(sid)
                             .processId(pid)
                             .number(number)
+                            .fileHash(fileHash)
                             .detail(Paths.get(pname, filename).toString())
                             .build();
                     return studentService.addProcessFile(pf);

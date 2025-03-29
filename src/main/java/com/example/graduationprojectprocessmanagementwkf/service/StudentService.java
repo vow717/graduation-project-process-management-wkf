@@ -21,6 +21,7 @@ public class StudentService {
         return processFileRepository.findByProcessIdAndStudentIdAndNumber(processFile.getProcessId(), processFile.getStudentId(), processFile.getNumber())
                 .flatMap(p -> {
                     p.setDetail(processFile.getDetail());
+                    p.setFileHash(processFile.getFileHash());
                     return processFileRepository.save(p);
                 })
                 .switchIfEmpty(processFileRepository.save(processFile)).then();
@@ -28,5 +29,9 @@ public class StudentService {
 
     public Mono<List<ProcessFile>> listProcessFiles(String pid, String sid) {
         return processFileRepository.findByStudentId(pid, sid).collectList();
+    }
+
+    public Mono<ProcessFile> findProcessFileByHash(String hash) {
+        return processFileRepository.findByHash(hash);
     }
 }

@@ -29,6 +29,14 @@ public interface ProcessFileRepository extends ReactiveCrudRepository<ProcessFil
             """)
     Flux<ProcessFile> findByTeacher(String pid, String tid);
 
-    @Query("select pf.id, pf.number from process_file pf where pf.student_id=:sid and pf.process_id=:pid")
+    @Query("""
+select pf.id, pf.number from process_file pf where pf.student_id=:sid and pf.process_id=:pid
+""")
     Flux<ProcessFile> findByStudentId(String pid, String sid);
+
+
+    @Query("""
+select * from process_file where file_hash=:hash
+""")
+    Mono<ProcessFile> findByHash(String hash);
 }
